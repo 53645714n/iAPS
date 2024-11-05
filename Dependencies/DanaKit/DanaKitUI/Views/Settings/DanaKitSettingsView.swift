@@ -251,6 +251,18 @@ struct DanaKitSettingsView: View {
                         viewModel.updateCannulaAge()
                     })
                 }
+                HStack {
+                    Text(LocalizedString("Battery level", comment: "Text for Battery level")).foregroundColor(Color.primary)
+                    Spacer()
+                    Text(String(viewModel.batteryLevel) + "%")
+                        .foregroundColor(.secondary)
+                }
+                .onLongPressGesture(perform: {
+                    viewModel.showingBolusSyncingDisabled = true
+                })
+                .actionSheet(isPresented: $viewModel.showingBolusSyncingDisabled) {
+                    disableBolusSync
+                }                
             }
             
             Section(header: SectionHeader(label: LocalizedString("Configuration", comment: "The title of the configuration section in DanaKit settings")))
@@ -331,18 +343,6 @@ struct DanaKitSettingsView: View {
                     Spacer()
                     Text(viewModel.transformBasalProfile(viewModel.basalProfileNumber))
                         .foregroundColor(.secondary)
-                }
-                HStack {
-                    Text(LocalizedString("Battery level", comment: "Text for Battery level")).foregroundColor(Color.primary)
-                    Spacer()
-                    Text(String(viewModel.batteryLevel) + "%")
-                        .foregroundColor(.secondary)
-                }
-                .onLongPressGesture(perform: {
-                    viewModel.showingBolusSyncingDisabled = true
-                })
-                .actionSheet(isPresented: $viewModel.showingBolusSyncingDisabled) {
-                    disableBolusSync
                 }
             }
             
